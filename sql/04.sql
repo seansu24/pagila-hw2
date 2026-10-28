@@ -4,3 +4,15 @@
  * HINT:
  * It's possible to solve this problem both with and without subqueries.
  */
+
+SELECT title
+FROM (
+    SELECT title, count(title) AS num
+    FROM film
+    JOIN inventory USING (film_id)
+    JOIN rental USING (inventory_id)
+    WHERE customer_id = 1
+    GROUP BY title
+) AS t
+WHERE num > 1
+ORDER BY title;
